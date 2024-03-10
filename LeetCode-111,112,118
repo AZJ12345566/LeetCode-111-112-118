@@ -1,0 +1,57 @@
+class Solution {
+/*
+111.二叉树的最小深度
+给定一个二叉树，找出其最小深度。
+最小深度是从根节点到最近叶子节点的最短路径上的节点数量。
+说明：叶子节点是指没有子节点的节点。
+*/
+  public int minDepth(TreeNode root) {
+    if(root == null) {
+      return 0;
+    }
+    if(root.left == null && root.right == null) {
+      return 1;
+    }
+    int min_depth = Integer.MAX_VALUE;
+    if(root.left != null) {
+      min_depth = Math.min(minDepth(root.left), min_depth);
+    }
+    if(root.right != null) {
+      min_depth = Math.min(minDepth(root.right), min_depth);
+    }
+    return min_depth + 1;
+  }
+/*
+112.路径总和
+给你二叉树的根节点 root 和一个表示目标和的整数 targetSum 。判断该树中是否存在 根节点到叶子节点 的路径，这条路径上所有节点值相加等于目标和 targetSum 。如果存在，返回 true ；否则，返回 false 。
+叶子节点 是指没有子节点的节点。
+*/
+  public boolean hasPathSum(TreeNode root, int targetSum) {
+    if(root == null) {
+      return false;
+    }
+    if(root.left == null && root.right == null) {
+      return root.val == targetSum;
+    }
+    return hasPathSum(root.left, targetSum - root.val) || hasPathSum(root.right, targetSum - root.val);
+  }
+/*
+118.杨辉三角
+给定一个非负整数 numRows，生成「杨辉三角」的前 numRows 行。
+*/
+  public List<List<Integer>> generate(int numRows) {
+    List<List<Integer>> ans = new ArrayList<List<Integer>>();
+    for(int i = 0; i < numRows; i++) {
+      List<Integer> list = new ArrayList<Integer>();
+      for(int j = 0; j <=i ; j++) {
+        if(j == 0 || j == i) {
+          list.add(1);
+        } else {
+            list.add(ans.get(i - 1).get(j - 1) + ans.get(i - 1).get(j));
+        }
+      }
+      ans.add(list);
+    }
+    return ans;
+  }
+}
